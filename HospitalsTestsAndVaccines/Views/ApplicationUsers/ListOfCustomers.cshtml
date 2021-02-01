@@ -1,0 +1,80 @@
+﻿@model IEnumerable<HospitalsTestsAndVaccines.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Κατάλογος Ασθενών</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading"></div>
+
+    <div class="panel-body">
+        <table class="table table-hover table-bordered table-condensed" id="UsersWithRoles">
+            <thead>
+                <tr>
+                    <td><b>Όνομα Ασθενή</b></td>
+                    <td><b>Τηλέφωνο </b></td>
+                    <td><b>Ημερομηνία Γέννησης</b></td>
+                    <td><b>Α.Μ.Κ.Α.</b></td>
+                    <td><b>e-Mail</b></td>
+                    <td><b>Προβλήματα Υγείας</b></td>
+                    <td><b>Διαχείρηση Ασθενή</b></td>
+                </tr>
+            </thead>
+            
+            @foreach (var item in Model)
+            {
+                if (item.Id != "207758ff-59e1-4cb9-a2ad-32efb936138c" && item.Id != "d8417601-4cbb-4281-87d6-43b61a894e7d")
+                {
+                    <tr>
+                        <td>@item.FirstName @item.LastName</td>
+                        <td>@item.Phone</td>
+                        <td>@item.DateOfBirth</td>
+                        <td>@item.Amka</td>
+                        <td>@item.Email</td>
+                        <td>@item.HealthIssues</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div>
+        <p class="button">
+        <p><b>Send Email</b></p>
+        <button type="button" class="btn btn-light">
+            <a href="@Url.Action("Index", "SendMailer") " onclick="window.open('@Url.Action("Index", "SendMailer")', 'newwindow', 'width=400, height=600'); return false;">Email Notifications</a>
+        </button>
+    </div>
+
+    <div>
+        <p class="button">
+        <p><b>Appointments Calendar</b></p>
+        <button type="button" class="btn btn-light"><a href="@Url.Action("Calendar", "Appointments") " onclick="window.open('@Url.Action("Calendar", "Appointments")', 'newwindow', 'width=800, height=1200'); return false;">Appointments Calendar</a></button>
+    </div>
+
+    <div class="panel-footer">
+        <p class="box-title"><b>Total Appointments till @String.Format("{0 : dddd, MMMM d, yyyy}", DateTime.Now)  : </b><span class="label label-primary">@Model.Count()</span></p>
+    </div>
+</div>
+
+@*--------------------------------------------------SORTING ASC/DESC*@
+@section scripts{
+    <script>
+        $(function () {
+            $('#UsersWithRoles').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+        });</script>
+}

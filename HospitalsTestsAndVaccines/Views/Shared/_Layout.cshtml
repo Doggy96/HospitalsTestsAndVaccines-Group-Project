@@ -1,0 +1,131 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Medic</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/assets/img/favicon.ico">
+    <!-- Place favicon.ico in the root directory -->
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap-5.0.5-alpha.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/LineIcons.2.0.css">
+    <link rel="stylesheet" href="~/Content/assets/css/animate.css">
+    <link rel="stylesheet" href="~/Content/assets/css/tiny-slider.css">
+    <link rel="stylesheet" href="~/Content/assets/css/main.css">
+    <link href="~/Content/Calendar.css" rel="stylesheet" type="text/css" />
+</head>
+
+<style>
+    .header-wrapper1{
+        position:absolute;
+        width:100%;
+        left:0;
+        top: -40%;
+        z-index:99;
+    }
+</style>
+<body>
+
+    <!-- ========================= header start ========================= -->
+    <div class="class=" preloader">
+        <header id="home" class="header">
+
+            <div class="header-wrapper1">
+                <div class="header-top theme-bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="header-top-left text-center text-md-left">
+                                    <ul>
+                                        <li><a href="#"><i class="lni lni-phone"></i> +30 691626556</a></li>
+                                        <li><a href="#"><i class="lni lni-envelope"></i> info@example.com</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="header-top-right d-none d-md-block">
+                                    <ul>
+                                        <li><a href="https://www.facebook.com/coronavirus_info/"><i class="lni lni-facebook-filled"></i></a></li>
+                                        <li><a href="https://twitter.com/eody_gr?fbclid=IwAR00T7oTV18qOBrRDU8jFRCdQglM0MUFOn-9PX2olJHSbhBdnKTvj2SBWL8"><i class="lni lni-twitter-filled"></i></a></li>
+                                        <li><a href="https://www.linkedin.com/company/covid-19-response-greece/"><i class="lni lni-linkedin-original"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <nav class="navbar navbar-expand-lg">
+
+                                    <a class="navbar-brand" href="/Home">
+                                        <img src="~/Content/assets/img/logo/logo.svg" alt="Logo">
+                                    </a>
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span class="toggler-icon"></span>
+                                        <span class="toggler-icon"></span>
+                                        <span class="toggler-icon"></span>
+                                    </button>
+
+                                    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                        <ul id="nav" class="navbar-nav ml-auto">
+
+
+                                            @if (!User.IsInRole("Patient") && !User.IsInRole("Dev") && !User.IsInRole("HospAdmin"))
+                                            {
+                                                <li class="nav-item active">@Html.ActionLink("Products", "IndexViewDefault", "Products")</li>
+                                            }
+                                            @if (User.IsInRole("Patient"))
+                                            {
+                                                <li class="nav-item">@Html.ActionLink("Products", "IndexViewForPatients", "Products")</li>
+                                                <li class="nav-item">@Html.ActionLink("Appointments", "AppointmentsOfPatient", "Appointments")</li>
+                                                <li class="nav-item">@Html.ActionLink("Profile", "ReadAndEditOnly", "ApplicationUsers")</li>
+                                            }
+                                            @if (User.IsInRole("Dev"))
+                                            {
+                                                <li class="nav-item">@Html.ActionLink("Products", "IndexViewForDevs", "Products")</li>
+                                                <li class="nav-item">@Html.ActionLink("Patients", "UsersWithRoles", "ApplicationUsers")</li>
+                                            }
+                                            @if (User.IsInRole("HospAdmin"))
+                                            {
+                                                <li class="nav-item">@Html.ActionLink("Products", "IndexViewDefault", "Products")</li>
+                                                <li class="nav-item">@Html.ActionLink("Appointments", "AllAppointments", "Appointments")</li>
+                                                <li class="nav-item">@Html.ActionLink("Patients", "ListOfCustomers", "ApplicationUsers")</li>
+                                            }
+                                            <li class="nav-item active"> @Html.Partial("_LoginPartial")</li>
+                                        </ul>
+
+
+                                    </div> <!-- navbar collapse -->
+                                </nav> <!-- navbar -->
+                            </div>
+                        </div> <!-- row -->
+                    </div> <!-- container -->
+                </div> <!-- navbar area -->
+            </div>
+        </header>
+    </div>
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        
+    </div>
+    <!-- ========================= JS here ========================= -->
+    <script src="~/Content/assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+    <script src="~/Content/assets/js/wow.min.js"></script>
+    <script src="~/Content/assets/js/tiny-slider.js"></script>
+    <script src="~/Content/assets/js/main.js"></script>
+
+    @Scripts.Render("~/bundles/lib")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
